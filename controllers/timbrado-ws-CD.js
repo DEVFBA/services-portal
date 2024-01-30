@@ -522,7 +522,7 @@ async function procesarXMLs(xmls, idApplication, tempPath) {
       
         /* Seal XML */
       
-        const cadena = await getCadena('./resources/XSLT/cadenaoriginal_3_3.xslt', `${tempPath}${fileName}`);
+        const cadena = await getCadena('./resources/XSLT_4_0/cadenaoriginal.xslt', `${tempPath}${fileName}`);
 
         const prm = await getSello(keyFilePath, keyPassword);
       
