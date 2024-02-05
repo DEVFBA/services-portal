@@ -383,7 +383,7 @@ async function procesarXMLs(xmls, idApplication, tempPath) {
         /**
          * * Determine JDE Table of the Receipt
          */
-        if( !xmlDoc.getElementsByTagName('cartaporte20:CartaPorte')[0] ) {
+        if( !xmlDoc.getElementsByTagName('cartaporte20:CartaPorte')[0] || !xmlDoc.getElementsByTagName('cartaporte30:CartaPorte')[0] ) {
 
           JDETable = 'F55XTRC';
 
@@ -591,6 +591,10 @@ async function procesarXMLs(xmls, idApplication, tempPath) {
           cfdiData.message                  = timbradoResponse.mensaje;
           cfdiData.timbrado.file            = path.basename(fileName, '.xml');
           cfdiData.timbrado.statusCFDI      = timbradoResponse.status;
+          cfdiData.timbrado.serie           = serie;
+          cfdiData.timbrado.folio           = folio;
+          cfdiData.timbrado.JDEtable        = JDETable;
+          cfdiData.timbrado.rfcEmisor       = rfcEmisor;
       
           cfdis = [...cfdis, cfdiData];
       
