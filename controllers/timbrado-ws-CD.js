@@ -380,19 +380,6 @@ async function procesarXMLs(xmls, idApplication, tempPath) {
       
         idCustomer = idCustomer[0].Id_Customer;
 
-        /**
-         * * Determine JDE Table of the Receipt
-         */
-        if( !xmlDoc.getElementsByTagName('cartaporte20:CartaPorte')[0] || !xmlDoc.getElementsByTagName('cartaporte30:CartaPorte')[0] ) {
-
-          JDETable = 'F55XTRC';
-
-        } else {
-
-          JDETable = 'F59TR01';
-
-        }
-
         /* Retrieve Customer Data */
 
         const address           = await getFullAddress(idCustomer);
@@ -461,6 +448,18 @@ async function procesarXMLs(xmls, idApplication, tempPath) {
           return data.Settings_Key === 'PDFLogo';
       
         });
+        
+        let cartaPorteJDETable = appConfig[0].filter( (data) => {
+      
+          return data.Settings_Key === 'CartaPorteJDETable';
+      
+        });
+        
+        let trasladoJDETable = appConfig[0].filter( (data) => {
+      
+          return data.Settings_Key === 'TrasladoJDETable';
+      
+        });
       
         cerFilePath                 = cerFilePath[0].Settings_Value;
         keyFilePath                 = keyFilePath[0].Settings_Value;
@@ -472,6 +471,29 @@ async function procesarXMLs(xmls, idApplication, tempPath) {
         defaultEmail                = defaultEmail[0].Settings_Value;
         deleteAddenda               = deleteAddenda[0].Settings_Value;
         pdfLogo                     = pdfLogo[0].Settings_Value;
+        cartaPorteJDETable          = cartaPorteJDETable[0].Settings_Value;
+        trasladoJDETable            = trasladoJDETable[0].Settings_Value;
+
+        /**
+         * * Determine JDE Table of the Receipt
+         */
+        console.log(xmlDoc.getElementsByTagName('cartaporte20:CartaPorte')[0]);
+        console.log(xmlDoc.getElementsByTagName('cartaporte30:CartaPorte')[0]);
+
+
+        if( xmlDoc.getElementsByTagName('cartaporte20:CartaPorte')[0] || xmlDoc.getElementsByTagName('cartaporte30:CartaPorte')[0] ) {
+
+          console.log('Carta Porte ', cartaPorteJDETable);
+
+          JDETable = cartaPorteJDETable;
+
+        } else {
+
+          console.log('Traslado ', trasladoJDETable);
+
+          JDETable = trasladoJDETable;
+
+        }
 
         /* 
 
